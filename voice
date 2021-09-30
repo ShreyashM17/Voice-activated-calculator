@@ -1,0 +1,26 @@
+import speech_recognition as sr
+import pyttsx3
+
+talk = pyttsx3.init('sapi5')     #For Windows it's sapi5 
+listener = sr.Recognizer()
+
+
+def speak(say):
+    talk.say(say)
+    talk.runAndWait()
+    print(f'--{say}')
+
+
+def take_command():
+    try:
+        with sr.Microphone() as source:
+            print("Listening...")
+            audio = listener.listen(source)
+            command = listener.recognize_google(audio, language='en')
+            command = command.lower()
+            print(command)
+            return command
+    except:
+        print("Nothing heard")
+        command = input()
+        return command
